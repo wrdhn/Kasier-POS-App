@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasier-App</title>
+    <link rel="stylesheet" href="assets/bootstrap-5.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <header>
@@ -15,7 +17,7 @@
             include "./src/includes/header.php";
         ?>
     </header>
-    <main>
+    <main class="container min-vh-100 d-flex flex-column">
         <?php
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
@@ -35,5 +37,10 @@
         }
         ?>
     </main>
+    <footer>
+        <?php
+            include "./src/includes/footer.php";
+        ?>
+    </footer>
 </body>
 </html>
