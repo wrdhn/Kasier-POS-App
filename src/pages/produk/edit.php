@@ -17,7 +17,7 @@
     }
 ?>
 
-<div class="container shadow mt-5 rounded-4">
+<div class="container border mt-5 rounded-4">
     <form action="" method="post">
         <div class="d-flex justify-content-between align-items-center px-4 pt-3 pb-4 border-bottom">
             <h2 class="fw-semibold">Edit Produk</h2>

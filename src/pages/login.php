@@ -1,6 +1,4 @@
-<!-- <?php
-session_start();
-
+<?php
 if (isset($_SESSION['login'])) {
     header("Location: index.php?page=home");
     exit;
@@ -10,15 +8,16 @@ if (isset($_POST['submit'])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $query = mysqli_connect($connect, "SELECT * FROM user WHERE Username = '$username' AND Password = '$password'");
+    $query = mysqli_query($connect, "SELECT * FROM user WHERE Username = '$username' AND Password = '$password'");
 
     if ($query) {
+        if (mysqli_num_rows($query)> 0) {
         $data = mysqli_fetch_array($query);
-        if ($data) {
             $_SESSION['login'] = true;
             $_SESSION['username'] = $data['Username'];
             $_SESSION['level'] = $data['Level'];
             header("Location: index.php?page=home");
+            echo "<script>console.log('Login berhasil, session diatur');</script>";
             exit;
         } else {
             echo "<script>alert('Username atau password salah');</script>";
@@ -27,27 +26,31 @@ if (isset($_POST['submit'])) {
         echo "<script>alert('Gagal terhubung ke database');</script>";
     }
 }
-
-echo "<script>alert(" .$_SESSION['login'] .")</script>";
 ?>
-
-<div class="container border rounded-4 py-4 mt-4">
-    <div class="text-center mb-5">
-        <h2 class="text-primary">Login</h2>
+<div class="container-fluid p-0">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h2 class="text-white mb-0">Login</h2>
+            </div>
+            <div class="login-form">
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+                        <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                        <button type="reset" class="btn btn-danger" name="reset">Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <form action="" class="form" method="post">
-        <div class="mt-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" name="username" id="username" required>
-        </div>
-        <div class="mt-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="text" class="form-control" name="username" id="username" required>
-        </div>
-        <div class="d-flex gap-2 mt-5   ">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="reset" class="btn btn-danger">Hapus</button>
+</div>
 
-        </div>
-    </form>
-</div> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

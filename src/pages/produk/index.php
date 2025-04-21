@@ -33,6 +33,10 @@ $query = mysqli_query($connect, "SELECT * FROM produk")
                         echo "</td>";
                         echo "</tr>";
                     }
+                } else {
+                    echo "<tr>";
+                    echo "<td colspan='5'>Tidak ada data produk</td>";
+                    echo "</tr>";
                 }
                 ?>
             </tbody>

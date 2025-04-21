@@ -1,10 +1,17 @@
 <?php
     include "./src/config/connection.php";
 
-    // if (!isset($_SESSION['login'])) {
-    //     header("Location: index.php?page=login");
-    //     exit;
-    // }
+    $is_login_page = isset($_GET['page']) &&  $_GET['page'] === 'login';
+
+    if (!isset($_SESSION['login']) && !$is_login_page) {
+        header("Location: index.php?page=login");
+        exit;
+    }
+
+    if (isset($_SESSION['login']) && $_SESSION['login'] === true && $is_login_page) {
+        header("Location: index.php?page=home");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +26,9 @@
 <body>
     <header>
         <?php 
+        if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
             include "./src/includes/header.php";
+        }
         ?>
     </header>
     <main class="container min-vh-100 d-flex flex-column">
@@ -52,19 +61,30 @@
                 include "./src/pages/produk/hapus.php";
             } else if ($page === "editProduk") {
                 include "./src/pages/produk/edit.php";
-            } else if ($page === "detail_penjualan") {
+            } else if ($page === "detailPenjualan") {
                 include "./src/pages/detail-penjualan/index.php";
             } else if ($page === "login") {
                 include "./src/pages/login.php";
+            } else if ($page === "logout") {
+                include "./src/pages/logout.php";
             } else {
                 include "./src/pages/404.php"; // 404 page
             }
+        } else {
+            if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
+                header("Location: index.php?page=home");
+            } else {
+                header("Location: index.php?page=login");
+            }
+            exit;
         }
         ?>
     </main>
     <footer>
         <?php
-            include "./src/includes/footer.php";
+            if (!isset($_GET['page']) || $_GET['page'] !== 'login') {
+                include "./src/includes/footer.php";
+            }
         ?>
     </footer>
 </body>

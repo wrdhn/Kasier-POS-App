@@ -33,6 +33,10 @@ $query = mysqli_query($connect, "SELECT * FROM pelanggan")
                         echo "</td>";
                         echo "</tr>";
                     }
+                } else {
+                    echo "<tr>";
+                    echo "<td colspan='5'>Tidak ada data pelanggan</td>";
+                    echo "</tr>";
                 }
                 ?>
             </tbody>
