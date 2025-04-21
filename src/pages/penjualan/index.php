@@ -29,7 +29,7 @@ $query = mysqli_query($connect, "SELECT penjualan.*, pelanggan.NamaPelanggan FRO
                         echo "<td>" . $data['NamaPelanggan'] . "</td>";
                         echo "<td class='d-flex justify-content-center gap-2'>";
                         echo "<a href='index.php?page=editPenjualan&id=" . $data['PenjualanID'] . "' class='btn btn-warning text-light'>Edit</a>";
-                        echo "<a href='index.php?page=detailPenjualan&id=" . $data['PenjualanID'] . "' class='btn btn-primary'>Detail</a>";
+                        echo "<a href='index.php?page=hapusPenjualan&id=" . $data['PenjualanID'] . "' class='btn btn-danger'>Hapus</a>";
                         echo "</td>";
                         echo "</tr>";
                     }
