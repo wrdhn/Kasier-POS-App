@@ -8,7 +8,7 @@ $query = mysqli_query($connect, "SELECT * FROM produk")
         <a href="index.php?page=tambahProduk" class="btn btn-primary">Tambah Produk</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover text-center">
+        <table class="table table-hover text-center align-middle">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -23,7 +23,7 @@ $query = mysqli_query($connect, "SELECT * FROM produk")
                 if (mysqli_num_rows(($query)) > 0) {
                     while ($data = mysqli_fetch_array($query)) {
                         echo "<tr>";
-                        echo "<td scope='col'>" . $data['ProdukID'] . "</td>";
+                        echo "<th scope='col'>" . $data['ProdukID'] . "</th>";
                         echo "<td>" . $data['NamaProduk'] . "</td>";
                         echo "<td>" . $data['Harga'] . "</td>";
                         echo "<td>" . $data['Stok'] . "</td>";
