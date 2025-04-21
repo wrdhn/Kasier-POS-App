@@ -14,7 +14,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="index.php?page=penjualan" class="nav-link">
                 Penjualan
             </a>
         </li>

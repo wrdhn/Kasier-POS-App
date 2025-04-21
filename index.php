@@ -38,6 +38,12 @@
                 include "./src/pages/pelanggan/hapus.php";
             } else if ($page === "penjualan") {
                 include "./src/pages/penjualan/index.php";
+            } else if ($page === "tambahPenjualan") {
+                include "./src/pages/penjualan/tambah.php";
+            } else if ($page === "editPenjualan") {
+                include "./src/pages/penjualan/edit.php";
+            } else if ($page === "hapusPenjualan") {
+                include "./src/pages/penjualan/hapus.php";
             } else if ($page === "produk") {
                 include "./src/pages/produk/index.php";
             } else if ($page === "tambahProduk") {
