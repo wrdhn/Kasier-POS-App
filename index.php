@@ -1,5 +1,6 @@
 <?php
     include "./src/config/connection.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +30,12 @@
                 include "./src/pages/penjualan/index.php";
             } else if ($page === "produk") {
                 include "./src/pages/produk/index.php";
+            } else if ($page === "tambahProduk") {
+                include "./src/pages/produk/tambah.php";
+            } else if ($page === "hapusProduk") {
+                include "./src/pages/produk/hapus.php";
+            } else if ($page === "editProduk") {
+                include "./src/pages/produk/edit.php";
             } else if ($page === "detail_penjualan") {
                 include "./src/pages/detail-penjualan/index.php";
             } else {
