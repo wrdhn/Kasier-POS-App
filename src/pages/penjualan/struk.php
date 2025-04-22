@@ -1,5 +1,4 @@
 <?php
-// Cek apakah ID penjualan tersedia
 if (!isset($_GET['id'])) {
     header("Location: index.php?page=penjualan");
     exit();
@@ -7,7 +6,6 @@ if (!isset($_GET['id'])) {
 
 $penjualan_id = $_GET['id'];
 
-// Ambil data penjualan
 $query_penjualan = mysqli_query($connect, "SELECT p.*, pl.NamaPelanggan, pl.NomorTelepon, pl.Alamat 
                                            FROM penjualan p 
                                            JOIN pelanggan pl ON p.PelangganID = pl.PelangganID 
@@ -20,7 +18,6 @@ if (mysqli_num_rows($query_penjualan) == 0) {
 
 $penjualan = mysqli_fetch_assoc($query_penjualan);
 
-// Ambil detail penjualan
 $query_detail = mysqli_query($connect, "SELECT dp.*, pr.NamaProduk, pr.Harga 
                                         FROM detailpenjualan dp 
                                         JOIN produk pr ON dp.ProdukID = pr.ProdukID 

@@ -14,6 +14,7 @@ if (isset($_POST['submit'])) {
         if (mysqli_num_rows($query)> 0) {
         $data = mysqli_fetch_array($query);
             $_SESSION['login'] = true;
+            $_SESSION['user_id'] = $data['UserID'];
             $_SESSION['username'] = $data['Username'];
             $_SESSION['level'] = $data['Level'];
             header("Location: index.php?page=home");
@@ -53,4 +54,4 @@ if (isset($_POST['submit'])) {
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->

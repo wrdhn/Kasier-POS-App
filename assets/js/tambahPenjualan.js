@@ -24,21 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.getElementById('total_display').value = formatRupiah(total);
         document.getElementById('total_harga').value = total;
-        
-        // Cek jika field bayar sudah terisi, hitung kembalian
-        const bayar = parseFloat(document.getElementById('bayar_display').value) || 0;
-        if (bayar > 0) {
-            hitungKembalian();
-        }
-    }
-    
-    function hitungKembalian() {
-        const total = parseFloat(document.getElementById('total_harga').value) || 0;
-        const bayar = parseFloat(document.getElementById('bayar_display').value) || 0;
-        const kembalian = bayar - total;
-        
-        document.getElementById('kembalian_display').value = formatRupiah(Math.max(0, kembalian));
-        document.getElementById('kembalian_input').value = Math.max(0, kembalian);
     }
     
     function handleProdukSelect(select) {
@@ -105,15 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Event listener untuk input bayar
-    const bayarInput = document.getElementById('bayar_display');
-    if (bayarInput) {
-        bayarInput.addEventListener('input', function() {
-            console.log('Bayar input changed:', this.value);
-            hitungKembalian();
-        });
-    }
-    
     // Tambah produk baru
     const btnTambahProduk = document.getElementById('btnTambahProduk');
     if (btnTambahProduk) {
@@ -167,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             const rows = document.querySelectorAll('.produk-row');
             const total = parseFloat(document.getElementById('total_harga').value) || 0;
-            const bayar = parseFloat(document.getElementById('bayar_display').value) || 0;
             
             if (rows.length === 0) {
                 e.preventDefault();
@@ -178,12 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (total <= 0) {
                 e.preventDefault();
                 alert('Total harga harus lebih dari 0!');
-                return;
-            }
-            
-            if (bayar < total) {
-                e.preventDefault();
-                alert('Pembayaran kurang! Minimal bayar: Rp ' + formatRupiah(total));
                 return;
             }
             

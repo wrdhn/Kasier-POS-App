@@ -22,6 +22,7 @@
     <title>Kasier-App</title>
     <link rel="stylesheet" href="assets/bootstrap-5.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/icons/bootstrap-icons.css">
 </head>
 <body>
     <header>

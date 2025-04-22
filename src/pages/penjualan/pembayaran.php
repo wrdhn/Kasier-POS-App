@@ -1,5 +1,4 @@
 <?php
-// Cek apakah ID penjualan tersedia
 if (!isset($_GET['id'])) {
     header("Location: index.php?page=penjualan");
     exit();
@@ -7,7 +6,6 @@ if (!isset($_GET['id'])) {
 
 $penjualan_id = $_GET['id'];
 
-// Ambil data penjualan
 $query_penjualan = mysqli_query($connect, "SELECT p.*, pl.NamaPelanggan, pl.NomorTelepon 
                                             FROM penjualan p 
                                             JOIN pelanggan pl ON p.PelangganID = pl.PelangganID 
@@ -20,22 +18,16 @@ if (mysqli_num_rows($query_penjualan) == 0) {
 
 $penjualan = mysqli_fetch_assoc($query_penjualan);
 
-// Ambil detail penjualan
 $query_detail = mysqli_query($connect, "SELECT dp.*, pr.NamaProduk, pr.Harga 
                                         FROM detailpenjualan dp 
                                         JOIN produk pr ON dp.ProdukID = pr.ProdukID 
                                         WHERE dp.PenjualanID = '$penjualan_id'");
 
-// Process payment form submission
 if (isset($_POST['proses_pembayaran'])) {
     $total_harga = $_POST['total_harga'];
     $jumlah_bayar = $_POST['jumlah_bayar'];
     $kembalian = $_POST['kembalian'];
     
-    // Update status pembayaran jika diperlukan (bisa ditambahkan kolom status di tabel penjualan)
-    // mysqli_query($connect, "UPDATE penjualan SET StatusPembayaran = 'Lunas' WHERE PenjualanID = '$penjualan_id'");
-    
-    // Redirect ke halaman invoice/struk
     echo "<script>
         alert('Pembayaran berhasil diproses!');
         window.location.href = 'index.php?page=struk&id=$penjualan_id';
@@ -53,7 +45,6 @@ if (isset($_POST['proses_pembayaran'])) {
     </div>
     
     <div class="row">
-        <!-- Informasi Penjualan -->
         <div class="col-md-5">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-primary text-white">
@@ -124,7 +115,6 @@ if (isset($_POST['proses_pembayaran'])) {
             </div>
         </div>
         
-        <!-- Form Pembayaran -->
         <div class="col-md-7">
             <div class="card shadow-sm">
                 <div class="card-header bg-warning">
@@ -167,7 +157,6 @@ if (isset($_POST['proses_pembayaran'])) {
                         
                         <hr>
                         
-                        <!-- Shortcut Buttons -->
                         <div class="d-flex flex-wrap justify-content-center mb-3 gap-2">
                             <button type="button" class="btn btn-outline-primary nominal-btn" data-nominal="10000">Rp 10.000</button>
                             <button type="button" class="btn btn-outline-primary nominal-btn" data-nominal="20000">Rp 20.000</button>
@@ -192,88 +181,4 @@ if (isset($_POST['proses_pembayaran'])) {
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Format number to Indonesian Rupiah
-    function formatRupiah(angka) {
-        return new Intl.NumberFormat('id-ID').format(angka);
-    }
-    
-    // Parse Rupiah format to number
-    function parseRupiah(rupiahStr) {
-        return parseInt(rupiahStr.replace(/\D/g, '')) || 0;
-    }
-    
-    const totalHarga = parseFloat(document.getElementById('total_harga').value);
-    const jumlahBayarDisplay = document.getElementById('jumlah_bayar_display');
-    const jumlahBayarHidden = document.getElementById('jumlah_bayar');
-    const kembalianDisplay = document.getElementById('kembalian_display');
-    const kembalianHidden = document.getElementById('kembalian');
-    const btnBayar = document.getElementById('btn-bayar');
-    
-    // Handle Jumlah Bayar Input
-    jumlahBayarDisplay.addEventListener('input', function() {
-        const value = parseRupiah(this.value);
-        
-        // Format display value
-        this.value = formatRupiah(value);
-        
-        // Set hidden input value
-        jumlahBayarHidden.value = value;
-        
-        // Calculate kembalian
-        const kembalian = value - totalHarga;
-        
-        kembalianDisplay.value = formatRupiah(Math.max(0, kembalian));
-        kembalianHidden.value = Math.max(0, kembalian);
-        
-        // Enable/disable payment button
-        btnBayar.disabled = value < totalHarga;
-    });
-    
-    // Handle Nominal Buttons
-    document.querySelectorAll('.nominal-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const nominal = parseInt(this.dataset.nominal);
-            const currentValue = parseRupiah(jumlahBayarDisplay.value) || 0;
-            
-            jumlahBayarDisplay.value = formatRupiah(currentValue + nominal);
-            jumlahBayarHidden.value = currentValue + nominal;
-            
-            // Calculate kembalian
-            const kembalian = (currentValue + nominal) - totalHarga;
-            
-            kembalianDisplay.value = formatRupiah(Math.max(0, kembalian));
-            kembalianHidden.value = Math.max(0, kembalian);
-            
-            // Enable/disable payment button
-            btnBayar.disabled = (currentValue + nominal) < totalHarga;
-        });
-    });
-    
-    // Handle Uang Pas Button
-    document.querySelector('.uang-pas-btn').addEventListener('click', function() {
-        jumlahBayarDisplay.value = formatRupiah(totalHarga);
-        jumlahBayarHidden.value = totalHarga;
-        
-        kembalianDisplay.value = formatRupiah(0);
-        kembalianHidden.value = 0;
-        
-        btnBayar.disabled = false;
-    });
-    
-    // Handle Form Submission
-    document.getElementById('formPembayaran').addEventListener('submit', function(e) {
-        const jumlahBayar = parseFloat(jumlahBayarHidden.value) || 0;
-        
-        if (jumlahBayar < totalHarga) {
-            e.preventDefault();
-            alert('Jumlah pembayaran kurang dari total belanja!');
-            return false;
-        }
-    });
-    
-    // Set keyboard focus to the payment input field when the page loads
-    jumlahBayarDisplay.focus();
-});
-</script>
+<script src="assets/js/pembayaran.js"></script>

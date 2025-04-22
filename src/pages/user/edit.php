@@ -1,56 +1,79 @@
 <?php
-    $getData = mysqli_query($connect, "SELECT * FROM user WHERE UserID = '" . $_GET['id'] . "'");
-    if (mysqli_num_rows($getData) > 0) {
-        $data = mysqli_fetch_array($getData);
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 'admin') {
+    echo "<script>alert('Anda tidak memiliki akses ke halaman ini'); window.location.href='index.php';</script>";
+    exit;
+}
+
+if (isset($_GET['id'])) {
+    $id = mysqli_real_escape_string($connect, $_GET['id']);
+    $query = mysqli_query($connect, "SELECT * FROM user WHERE UserID = '$id'");
+    $data = mysqli_fetch_assoc($query);
+    
+    if (!$data) {
+        echo "<script>alert('Data pengguna tidak ditemukan'); window.location.href='index.php?page=user';</script>";
+        exit;
+    }
+} else {
+    echo "<script>window.location.href='index.php?page=user';</script>";
+    exit;
+}
+
+if (isset($_POST['submit'])) {
+    $username = mysqli_real_escape_string($connect, $_POST['username']);
+    $password = $_POST['password']; // Jika password diubah
+    $level = mysqli_real_escape_string($connect, $_POST['level']);
+    
+    $check_query = mysqli_query($connect, "SELECT * FROM user WHERE Username = '$username' AND UserID != '$id'");
+    if (mysqli_num_rows($check_query) > 0) {
+        echo "<script>alert('Username sudah digunakan. Silakan pilih username lain.');</script>";
     } else {
-        echo "<script>alert('Data tidak ditemukan');</script>";
-        echo "<script>window.location.href='index.php?page=user';</script>";
+        // Update dengan atau tanpa password
+        if (!empty($password)) {
+            $password = mysqli_real_escape_string($connect, $_POST['password']);
+            $query = mysqli_query($connect, "UPDATE user SET Username = '$username', Password = '$password', Level = '$level' WHERE UserID = '$id'");
+        } else {
+            // Jika password kosong, jangan update password yaa sayang
+            $query = mysqli_query($connect, "UPDATE user SET Username = '$username', Level = '$level' WHERE UserID = '$id'");
+        }
+        
+        if ($query) {
+            echo "<script>alert('Data pengguna berhasil diperbarui'); window.location.href='index.php?page=user';</script>";
+        } else {
+            echo "<script>alert('Gagal memperbarui data: " . mysqli_error($connect) . "');</script>";
+        }
     }
-    if (isset($_POST["submit"])) {
-    $query = mysqli_query($connect, "UPDATE user SET Username = '" . $_POST['username'] . "', Password = '" . $_POST['password'] . "', Level = '" . $_POST['level'] . "' WHERE UserID = '" . $_GET['id'] . "'");
-    if ($query) {
-        echo "<script>alert('Data berhasil diedit');</script>";
-        echo "<script>window.location.href='index.php?page=user';</script>";
-    } else {
-        echo "<script>alert('Data gagal diedit');</script>";
-    }
-    }
+}
 ?>
 
-<div class="container border mt-5 rounded-4">
-<form action="" method="post">
-        <div class="d-flex justify-content-between align-items-center px-4 pt-3 pb-4 border-bottom">
-            <h2 class="fw-semibold">Tambah User</h2>
-            <a href="index.php?page=user" class="btn btn-primary">Kembali</a>
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Edit Pengguna</h5>
         </div>
-        <div class="px-4 py-3">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="<?php echo $data['Username']?>" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" value="<?php echo $data['Password']?>" required>
-            </div>
-            <div class="mb-3">
-                <?php
-                if ($data['Level'] === 'admin') { ?>
-                    <input type="radio" class="form-check-input" id="admin" name="level" value="admin" checked required>
-                <?php } else { ?>
-                    <input type="radio" class="form-check-input" id="admin" name="level" value="admin" required>
-                <?php }?>
-                <label for="admin" class="form-label">Admin</label>
-                <?php if ($data['Level'] === 'user') { ?>
-                    <input type="radio" class="form-check-input" id="admin" name="level" value="user" checked required>
-                <?php } else { ?>
-                    <input type="radio" class="form-check-input" id="admin" name="level" value="user" required>
-                <?php }?>
-                <label for="user" class="form-label">User</label>
-            </div>
-            <div class="d-flex gap-2 mt-4">
-                <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
-                <button type="reset" name="reset" class="btn btn-danger">Hapus</button>
-            </div>
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($data['Username']) ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Biarkan kosong jika tidak ingin mengubah password">
+                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah password</small>
+                </div>
+                <div class="mb-3">
+                    <label for="level" class="form-label">Level</label>
+                    <select class="form-select" id="level" name="level" required>
+                        <option value="">-- Pilih Level --</option>
+                        <option value="admin" <?= ($data['Level'] == 'admin') ? 'selected' : '' ?>>Admin</option>
+                        <option value="petugas" <?= ($data['Level'] == 'petugas') ? 'selected' : '' ?>>Petugas</option>
+                    </select>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <a href="index.php?page=user" class="btn btn-secondary">Kembali</a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

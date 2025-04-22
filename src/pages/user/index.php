@@ -1,75 +1,79 @@
 <?php
-if ($_SESSION['level'] == 'admin') {
-    if (isset($_POST['submit'])) {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-        $level = $_POST["level"];
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 'admin') {
+    echo "<script>alert('Anda tidak memiliki akses ke halaman ini'); window.location.href='index.php';</script>";
+    exit;
+}
 
-        $query = mysqli_query($connect, "INSERT INTO user (Username, Password, Level) VALUES ('$username', '$password', '$level')");
-
-        if ($query) {
-            echo "<script>alert('User berhasil ditambahkan');</script>";
-            header("Location: index.php?page=user");
-            exit;
-        } else {
-            echo "<script>alert('Gagal menambahkan user');</script>";
-        }
-    }
+$search = "";
+if (isset($_GET['search'])) {
+    $search = mysqli_real_escape_string($connect, $_GET['search']);
+    $query = mysqli_query($connect, "SELECT * FROM user WHERE Username LIKE '%$search%'");
+} else {
+    $query = mysqli_query($connect, "SELECT * FROM user");
 }
 ?>
 
-<div class="container my-4 px-0">
-    <div class="card shadow rounded-2 border">
-    <div class="card-header d-flex justify-content-between align-items-center bg-primary py-3 rounded-top-2">
-    <h2 class="fw-semibold text-white">Data Pengguna</h2>
-    </div>
-    <div class="row my-3 mx-2">
-        <div class="col-md-6">
-            <a href="index.php?page=tambahPengguna" class="btn btn-success">Tambah Pengguna</a>
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Data Pengguna</h5>
         </div>
-        <div class="col-md-6 text-end">
-            <form action="" class="d-inline-flex" role="search">
-                <input type="search" value="" class="form-control me-2" placeholder="Cari...">
-                <button class="btn btn-primary" type="submit" >Cari</button>
-            </form>
-        </div>
-    </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6 mb-2">
+                    <a href="index.php?page=tambahUser" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Tambah Pengguna
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <form action="" method="GET" class="d-flex">
+                        <input type="hidden" name="page" value="user">
+                        <input type="search" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control me-2" placeholder="Cari pengguna...">
+                        <button class="btn btn-primary" type="submit">Cari</button>
+                    </form>
+                </div>
+            </div>
 
-    <div class="table-responsive p-3 bg-light">
-        <table class="table table-hover text-center align-middle">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Level</th>
-                    <?php if ($_SESSION['level'] == 'admin') { ?>
-                        <th scope="col">Aksi</th>
-                    <?php } ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $query = mysqli_query($connect, "SELECT * FROM user");
-                if (mysqli_num_rows($query) > 0) {
-                    while ($data = mysqli_fetch_array($query)) {
-                        echo "<tr>";
-                        echo "<th scope='col'>" . $data['UserID'] . "</th>";
-                        echo "<td>" . $data['Username'] . "</td>";
-                        echo "<td>" . $data['Level'] . "</td>";
-                        if ($_SESSION['level'] == 'admin') {
-                            echo "<td class='d-flex justify-content-center gap-2'>";
-                            echo "<a href='index.php?page=editPengguna=" . $data['UserID'] . "' class='btn btn-warning text-light'>Edit</a>";
-                            echo "<a href='index.php?page=editPengguna=" . $data['UserID'] . "' class='btn btn-danger'>Hapus</a>";
-                            echo "</td>";
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Level</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (mysqli_num_rows(($query)) > 0) {
+                            while ($data = mysqli_fetch_array($query)) {
+                                echo "<tr>";
+                                echo "<td>" . $data['UserID'] . "</td>";
+                                echo "<td>" . $data['Username'] . "</td>";
+                                echo "<td>" . ucfirst($data['Level']) . "</td>";
+                                echo "<td>";
+                                echo "<div class='btn-group'>";
+                                echo "<a href='index.php?page=editUser&id=" . $data['UserID'] . "' class='btn btn-warning btn-sm'>Edit</a>";
+                                
+                                // Jangan tampilkan tombol hapus untuk akun sendiri
+                                if ($_SESSION['user_id'] != $data['UserID']) {
+                                    echo "<a href='index.php?page=hapusUser&id=" . $data['UserID'] . "' class='btn btn-danger btn-sm' onclick=\"return confirm('Yakin ingin menghapus pengguna ini?');\">Hapus</a>";
+                                }
+                                
+                                echo "</div>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr>";
+                            echo "<td colspan='4' class='text-center'>Tidak ada data pengguna</td>";
+                            echo "</tr>";
                         }
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr>";
-                    echo "<td colspan='4'>Tidak ada data user</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
