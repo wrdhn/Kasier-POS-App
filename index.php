@@ -49,10 +49,10 @@
                 include "./src/pages/penjualan/index.php";
             } else if ($page === "tambahPenjualan") {
                 include "./src/pages/penjualan/tambah.php";
-            } else if ($page === "editPenjualan") {
-                include "./src/pages/penjualan/edit.php";
-            } else if ($page === "hapusPenjualan") {
-                include "./src/pages/penjualan/hapus.php";
+            } else if ($page === "pembayaran") {
+                include "./src/pages/penjualan/pembayaran.php";
+            } else if ($page === "struk") {
+                include "./src/pages/penjualan/struk.php";
             } else if ($page === "produk") {
                 include "./src/pages/produk/index.php";
             } else if ($page === "tambahProduk") {
@@ -67,6 +67,14 @@
                 include "./src/pages/login.php";
             } else if ($page === "logout") {
                 include "./src/pages/logout.php";
+            } else if ($page === "pengguna") {
+                include "./src/pages/user/index.php";
+            } else if ($page === "tambahPengguna") {
+                include "./src/pages/user/tambah.php";
+            }else if ($page === "hapusPengguna") {
+                include "./src/pages/user/hapus.php";
+            }else if ($page === "editUser") {
+                include "./src/pages/user/edit.php";
             } else {
                 include "./src/pages/404.php"; // 404 page
             }

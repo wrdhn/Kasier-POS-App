@@ -2,12 +2,23 @@
 $query = mysqli_query($connect, "SELECT penjualan.*, pelanggan.NamaPelanggan FROM penjualan JOIN pelanggan ON penjualan.PelangganID = pelanggan.PelangganID");
 ?>
 
-<div class="container border rounded-4 my-5 py-3 px-0">
-    <div class="d-flex justify-content-between align-items-center px-4 pt-3 pb-4 border-bottom">
-        <h2 class="fw-semibold">Data Penjualan</h2>
-        <a href="index.php?page=tambahPenjualan" class="btn btn-primary">Tambah Penjualan</a>
+<div class="container my-4 px-0">
+    <div class="card shadow rounded-2 border">
+    <div class="card-header d-flex justify-content-between align-items-center bg-primary py-3 rounded-top-2">
+    <h2 class="fw-semibold text-white">Data Penjualan</h2>
     </div>
-    <div class="table-responsive">
+    <div class="row my-3 mx-2">
+        <div class="col-md-6">
+            <a href="index.php?page=tambahPenjualan" class="btn btn-success">Tambah Penjualan</a>
+        </div>
+        <div class="col-md-6 text-end">
+            <form action="" class="d-inline-flex" role="search">
+                <input type="search" value="" class="form-control me-2" placeholder="Cari...">
+                <button class="btn btn-primary" type="submit" >Cari</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive p-3 bg-light">
         <table class="table table-hover text-center align-middle">
             <thead>
                 <tr>
@@ -28,8 +39,7 @@ $query = mysqli_query($connect, "SELECT penjualan.*, pelanggan.NamaPelanggan FRO
                         echo "<td> Rp" . number_format($data['TotalHarga'], 0, ',', '.') . "</td>";
                         echo "<td>" . $data['NamaPelanggan'] . "</td>";
                         echo "<td class='d-flex justify-content-center gap-2'>";
-                        echo "<a href='index.php?page=hapusPenjualan&id=" . $data['PenjualanID'] . "' class='btn btn-danger'>Hapus</a>";
-                        echo "<a href='index.php?page=detailPenjualan&id=" . $data['PenjualanID'] . "' class='btn btn-primary'>Detail</a>";
+                        echo "<a href='index.php?page=detailPenjualan&id=" . $data['PenjualanID'] . "' class='btn btn-primary text-light'>Detail</a>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -41,5 +51,6 @@ $query = mysqli_query($connect, "SELECT penjualan.*, pelanggan.NamaPelanggan FRO
                 ?>
             </tbody>
         </table>
+    </div>
     </div>
 </div>

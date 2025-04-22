@@ -28,7 +28,7 @@ $penjualan = mysqli_fetch_assoc($query_penjualan);
 
 $query_detail = mysqli_query($connect, 
     "SELECT dp.*, p.NamaProduk, p.Harga
-     FROM detail_penjualan dp
+     FROM detailpenjualan dp
      JOIN produk p ON dp.ProdukID = p.ProdukID
      WHERE dp.PenjualanID = '$id_penjualan'"
 );
