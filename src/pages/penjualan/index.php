@@ -19,7 +19,7 @@ if (isset($_GET['filter'])) {
     
     if (!empty($_GET['pelanggan_id'])) {
         $pelanggan_id = mysqli_real_escape_string($connect, $_GET['pelanggan_id']);
-        $where_clause .= " AND PelangganID = '$pelanggan_id'";
+        $where_clause .= " AND penjualan.PelangganID = '$pelanggan_id'";
     }
 }
 

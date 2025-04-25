@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
         $query = mysqli_query($connect, "INSERT INTO user (Username, Password, Level) VALUES ('$username', '$password', '$level')");
         
         if ($query) {
-            echo "<script>alert('Data pengguna berhasil ditambahkan'); window.location.href='index.php?page=user';</script>";
+            echo "<script>alert('Data pengguna berhasil ditambahkan'); window.location.href='index.php?page=pengguna';</script>";
         } else {
             echo "<script>alert('Gagal menambahkan data: " . mysqli_error($connect) . "');</script>";
         }

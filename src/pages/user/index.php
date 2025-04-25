@@ -21,13 +21,13 @@ if (isset($_GET['search'])) {
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6 mb-2">
-                    <a href="index.php?page=tambahUser" class="btn btn-success">
+                    <a href="index.php?page=tambahPengguna" class="btn btn-success">
                         <i class="bi bi-plus-circle"></i> Tambah Pengguna
                     </a>
                 </div>
                 <div class="col-md-6">
                     <form action="" method="GET" class="d-flex">
-                        <input type="hidden" name="page" value="user">
+                        <input type="hidden" name="page" value="pengguna">
                         <input type="search" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control me-2" placeholder="Cari pengguna...">
                         <button class="btn btn-primary" type="submit">Cari</button>
                     </form>
@@ -54,11 +54,11 @@ if (isset($_GET['search'])) {
                                 echo "<td>" . ucfirst($data['Level']) . "</td>";
                                 echo "<td>";
                                 echo "<div class='btn-group'>";
-                                echo "<a href='index.php?page=editUser&id=" . $data['UserID'] . "' class='btn btn-warning btn-sm'>Edit</a>";
+                                echo "<a href='index.php?page=editPengguna&id=" . $data['UserID'] . "' class='btn btn-warning btn-sm'>Edit</a>";
                                 
                                 // Jangan tampilkan tombol hapus untuk akun sendiri
                                 if ($_SESSION['user_id'] != $data['UserID']) {
-                                    echo "<a href='index.php?page=hapusUser&id=" . $data['UserID'] . "' class='btn btn-danger btn-sm' onclick=\"return confirm('Yakin ingin menghapus pengguna ini?');\">Hapus</a>";
+                                    echo "<a data-href='index.php?page=hapusPengguna&id=" . $data['UserID'] . "' class='btn btn-danger btn-sm delete-btn'>Hapus</a>";
                                 }
                                 
                                 echo "</div>";

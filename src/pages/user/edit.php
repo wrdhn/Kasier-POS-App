@@ -10,11 +10,11 @@ if (isset($_GET['id'])) {
     $data = mysqli_fetch_assoc($query);
     
     if (!$data) {
-        echo "<script>alert('Data pengguna tidak ditemukan'); window.location.href='index.php?page=user';</script>";
+        echo "<script>alert('Data pengguna tidak ditemukan'); window.location.href='index.php?page=pengguna';</script>";
         exit;
     }
 } else {
-    echo "<script>window.location.href='index.php?page=user';</script>";
+    echo "<script>window.location.href='index.php?page=pengguna';</script>";
     exit;
 }
 
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="d-flex gap-2">
                     <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    <a href="index.php?page=user" class="btn btn-secondary">Kembali</a>
+                    <a href="index.php?page=pengguna" class="btn btn-secondary">Kembali</a>
                 </div>
             </form>
         </div>

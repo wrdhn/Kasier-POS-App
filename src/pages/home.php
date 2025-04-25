@@ -127,7 +127,7 @@ while ($row = mysqli_fetch_assoc($queryProdukTerlaris)) {
                         </div>
                         <div class="col-9">
                             <h5 class="text-muted">Total Pendapatan</h5>
-                            <h2 class="fw-bold">Rp <?= number_format($totalPendapatan, 0, ',', '.') ?></h2>
+                            <h2 class="fw-bold fs-3">Rp <?= number_format($totalPendapatan, 0, ',', '.') ?></h2>
                         </div>
                     </div>
                 </div>

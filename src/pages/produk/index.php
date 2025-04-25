@@ -52,7 +52,7 @@ if (isset($_GET['search'])) {
                                 echo "<td>";
                                 echo "<div class='btn-group'>";
                                 echo "<a href='index.php?page=editProduk&id=" . $data['ProdukID'] . "' class='btn btn-warning btn-sm'>Edit</a>";
-                                echo "<a href='index.php?page=hapusProduk&id=" . $data['ProdukID'] . "' class='btn btn-danger btn-sm' onclick=\"return confirm('Yakin ingin menghapus produk ini?');\">Hapus</a>";
+                                echo "<a data-href='index.php?page=hapusProduk&id=" . $data['ProdukID'] . "' class='btn btn-danger btn-sm delete-btn'>Hapus</a>";
                                 echo "</div>";
                                 echo "</td>";
                                 echo "</tr>";

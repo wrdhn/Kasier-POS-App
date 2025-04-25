@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/bootstrap-5.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/alert/sweetalert2.min.css">
 </head>
 <body>
     <header>
@@ -74,10 +75,10 @@
                 include "./src/pages/user/tambah.php";
             }else if ($page === "hapusPengguna") {
                 include "./src/pages/user/hapus.php";
-            }else if ($page === "editUser") {
+            }else if ($page === "editPengguna") {
                 include "./src/pages/user/edit.php";
             } else {
-                include "./src/pages/404.php"; // 404 page
+                include "./src/pages/404.php";
             }
         } else {
             if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
@@ -96,5 +97,7 @@
             }
         ?>
     </footer>
+    <script src="assets/alert/sweetalert2.all.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

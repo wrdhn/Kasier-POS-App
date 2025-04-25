@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="mb-3">
                     <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
-                    <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon" value="<?= htmlspecialchars($data['NomorTelepon']) ?>" required>
+                    <input type="number" class="form-control" id="nomor_telepon" name="nomor_telepon" value="<?= htmlspecialchars($data['NomorTelepon']) ?>" required>
                 </div>
                 <div class="d-flex gap-2">
                     <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
