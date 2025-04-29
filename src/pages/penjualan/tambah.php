@@ -3,9 +3,9 @@ $query_pelanggan = mysqli_query($connect, "SELECT * FROM pelanggan ORDER BY Nama
 $query_produk = mysqli_query($connect, "SELECT * FROM produk WHERE Stok > 0 ORDER BY NamaProduk ASC");
 
 if (isset($_POST['submit'])) {
-    $pelanggan_id = $_POST['pelanggan_id'];
-    $tanggal_penjualan = $_POST['tanggal_penjualan'];
-    $total_harga = $_POST['total_harga'];
+    $pelanggan_id = mysqli_real_escape_string($connect, $_POST['pelanggan_id']);
+    $tanggal_penjualan = mysqli_real_escape_string($connect, $_POST['tanggal_penjualan']);
+    $total_harga = mysqli_real_escape_string($connect, $_POST['total_harga']);
     
     mysqli_begin_transaction($connect);
     
