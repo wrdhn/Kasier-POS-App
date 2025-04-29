@@ -1,5 +1,4 @@
 <?php
-// tambah_penjualan.php
 $query_pelanggan = mysqli_query($connect, "SELECT * FROM pelanggan ORDER BY NamaPelanggan ASC");
 $query_produk = mysqli_query($connect, "SELECT * FROM produk WHERE Stok > 0 ORDER BY NamaProduk ASC");
 
@@ -196,6 +195,4 @@ if (isset($_POST['submit'])) {
 <script>
 </script>
 
-<!-- Include Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 <script src="assets/js/tambahPenjualan.js"></script>
