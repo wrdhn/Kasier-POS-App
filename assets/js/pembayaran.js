@@ -20,13 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
     jumlahBayarDisplay.addEventListener('input', function() {
         const value = parseRupiah(this.value);
         
-        // Format display value
         this.value = formatRupiah(value);
         
         // Set hidden input value
         jumlahBayarHidden.value = value;
         
-        // Calculate kembalian
         const kembalian = value - totalHarga;
         
         kembalianDisplay.value = formatRupiah(Math.max(0, kembalian));
@@ -45,13 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
             jumlahBayarDisplay.value = formatRupiah(currentValue + nominal);
             jumlahBayarHidden.value = currentValue + nominal;
             
-            // Calculate kembalian
             const kembalian = (currentValue + nominal) - totalHarga;
             
             kembalianDisplay.value = formatRupiah(Math.max(0, kembalian));
             kembalianHidden.value = Math.max(0, kembalian);
             
-            // Enable/disable payment button
             btnBayar.disabled = (currentValue + nominal) < totalHarga;
         });
     });
@@ -78,6 +74,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Set keyboard focus to the payment input field when the page loads
     jumlahBayarDisplay.focus();
 });

@@ -18,7 +18,6 @@ if (isset($_POST['submit'])) {
             $_SESSION['username'] = $data['Username'];
             $_SESSION['level'] = $data['Level'];
             header("Location: index.php?page=home");
-            echo "<script>console.log('Login berhasil, session diatur');</script>";
             exit;
         } else {
             echo "<script>alert('Username atau password salah');</script>";
@@ -53,5 +52,3 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->

@@ -23,7 +23,7 @@ if (isset($_GET['filter'])) {
     }
 }
 
-// Query data penjualan with filter
+// Query data penjualan dengan filter
 $query = mysqli_query($connect, "
     SELECT penjualan.*, pelanggan.NamaPelanggan 
     FROM penjualan 

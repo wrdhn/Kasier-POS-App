@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Intl.NumberFormat('id-ID').format(angka);
     }
     
+    // Hitung subtotal berdasarkan harga dan jumlah produk dalam satu baris
     function hitungSubtotal(row) {
         const harga = parseFloat(row.querySelector('.harga-hidden').value) || 0;
         const jumlah = parseInt(row.querySelector('.jumlah-produk').value) || 0;
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hitungTotal();
     }
     
+    // Hitung total harga dari seluruh produk
     function hitungTotal() {
         let total = 0;
         document.querySelectorAll('.subtotal-hidden').forEach(input => {
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('total_harga').value = total;
     }
     
+    // Penanganan saat pilihan produk berubah
     function handleProdukSelect(select) {
         const row = select.closest('.produk-row');
         const option = select.options[select.selectedIndex];
